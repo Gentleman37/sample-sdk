@@ -1,8 +1,17 @@
 {
   "name": "sample-sdk",
   "version": "1.0.0",
-  "main": "index.js",
+  "module": "dist/es/bundle.js",
+  "types": "dist/types/index.d.ts",
   "repository": "https://github.com/Gentleman37/sample-sdk.git",
   "author": "Gentleman37 <mango037@naver.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "@rollup/plugin-typescript": "^8.2.1",
+    "typescript": "^4.3.5"
+  }
 }
