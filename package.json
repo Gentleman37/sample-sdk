@@ -1,5 +1,5 @@
 {
-  "name": "sample-sdk",
+  "name": "gentleman-sample-sdk",
   "version": "1.0.0",
   "module": "dist/es/bundle.js",
   "types": "dist/types/index.d.ts",
