@@ -1,0 +1,8 @@
+{
+  "name": "sample-sdk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Gentleman37/sample-sdk.git",
+  "author": "Gentleman37 <mango037@naver.com>",
+  "license": "MIT"
+}
