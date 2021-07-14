@@ -1,1 +1,1 @@
-export { SampleSDK } from './SampleSDK'
+export { GentleSDK } from './gentle'
