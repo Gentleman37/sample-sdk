@@ -1,6 +1,6 @@
 {
   "name": "gentleman-sample-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "module": "dist/es/bundle.js",
   "types": "dist/types/index.d.ts",
   "repository": "https://github.com/Gentleman37/sample-sdk.git",
@@ -16,5 +16,9 @@
   },
   "files": [
     "/dist"
-  ]
+  ],
+  "peerDependencies": {
+    "rollup": "^2.53.1",
+    "tslib": "^2.3.0"
+  }
 }
