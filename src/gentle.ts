@@ -1,5 +1,5 @@
 import browserHandler from './borwserHandler'
-import { BrowserId, BrowserInfo, ClientEvent, CustomerId, EventLog, EVENT_NAME, ISOTimestamp, LogProperty, SessionId } from './types'
+import { BrowserId, BrowserInfo, LogEvent, CustomerId, EVENT_NAME, ISOTimestamp, LogProperty, SessionId } from './types'
 
 class GentleSDK {
   private browserId: BrowserId = null
@@ -7,7 +7,7 @@ class GentleSDK {
   private sessionId: SessionId = null
   private customerId: CustomerId = null
 
-  private events: EventLog[] = []
+  private events: LogEvent[] = []
 
   constructor(customerId?: CustomerId) {
     if (typeof window === 'undefined') throw new Error('window is undefined!')
@@ -35,7 +35,7 @@ class GentleSDK {
     this.customerId = id
   }
 
-  track(event: ClientEvent, customerId?: CustomerId) {
+  track(event: LogEvent, customerId?: CustomerId) {
     const userProperty = this.getUserProperty()
 
     if (event.eventName === EVENT_NAME.LOGIN) {
@@ -43,7 +43,7 @@ class GentleSDK {
       this.updateUserInfo(customerId)
     }
 
-    const log: EventLog = { ...event, ...userProperty }
+    const log: LogEvent & LogProperty = { ...event, ...userProperty }
     this.events.push(log)
     // TODO: 서버로 로그 전송
   }
@@ -58,9 +58,7 @@ class GentleSDK {
   }
 
   getEvents() {
-    return {
-      events: this.events,
-    }
+    return this.events
   }
 
   resetEvents() {

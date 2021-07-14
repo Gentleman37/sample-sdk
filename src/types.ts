@@ -3,7 +3,7 @@ export type CustomerId = string | number | null
 export type SessionId = string | null
 export type ISOTimestamp = string
 
-export type ClientEvent = {
+export type LogEvent = {
   eventName: EVENT_NAME
   properties: any
 }
@@ -14,8 +14,6 @@ export type LogProperty = {
   browserId: BrowserId
   customerId: CustomerId
 }
-
-export type EventLog = ClientEvent & LogProperty
 
 export type BrowserInfo = Bowser.Parser.ParsedResult | null
 
