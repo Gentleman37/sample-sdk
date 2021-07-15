@@ -36,12 +36,12 @@ class GentleSDK {
   }
 
   track(event: LogEvent, customerId?: CustomerId) {
-    const userProperty = this.getUserProperty()
-
-    if (event.eventName === 'view') {
+    if (event.eventName === 'login') {
       if (customerId === undefined) throw new Error('customerId should be provided!')
       this.updateUserInfo(customerId)
     }
+
+    const userProperty = this.getUserProperty()
 
     const log: LogEvent & LogProperty = { ...event, ...userProperty }
     this.events.push(log)

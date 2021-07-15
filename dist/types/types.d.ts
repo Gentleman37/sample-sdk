@@ -1,3 +1,4 @@
+import { GentleSDK } from './gentle';
 export declare type BrowserId = string | null;
 export declare type CustomerId = string | number | null;
 export declare type SessionId = string | null;
@@ -14,3 +15,4 @@ export declare type LogProperty = {
 };
 export declare type BrowserInfo = Bowser.Parser.ParsedResult | null;
 export declare type EventName = 'login' | 'click' | 'view';
+export declare type GentleSDKClient = InstanceType<typeof GentleSDK>;

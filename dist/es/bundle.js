@@ -2380,12 +2380,12 @@ class GentleSDK {
         this.customerId = id;
     }
     track(event, customerId) {
-        const userProperty = this.getUserProperty();
-        if (event.eventName === 'view') {
+        if (event.eventName === 'login') {
             if (customerId === undefined)
                 throw new Error('customerId should be provided!');
             this.updateUserInfo(customerId);
         }
+        const userProperty = this.getUserProperty();
         const log = { ...event, ...userProperty };
         this.events.push(log);
         // TODO: 서버로 로그 전송
@@ -2409,4 +2409,4 @@ const createGentleInstance = (customerId) => {
     return new GentleSDK(customerId);
 };
 
-export { GentleSDK, createGentleInstance };
+export { createGentleInstance };
