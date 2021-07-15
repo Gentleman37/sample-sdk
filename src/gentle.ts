@@ -1,5 +1,5 @@
 import browserHandler from './borwserHandler'
-import { BrowserId, BrowserInfo, LogEvent, CustomerId, EVENT_NAME, ISOTimestamp, LogProperty, SessionId } from './types'
+import { BrowserId, BrowserInfo, LogEvent, CustomerId, ISOTimestamp, LogProperty, SessionId } from './types'
 
 class GentleSDK {
   private browserId: BrowserId = null
@@ -38,7 +38,7 @@ class GentleSDK {
   track(event: LogEvent, customerId?: CustomerId) {
     const userProperty = this.getUserProperty()
 
-    if (event.eventName === EVENT_NAME.LOGIN) {
+    if (event.eventName === 'view') {
       if (customerId === undefined) throw new Error('customerId should be provided!')
       this.updateUserInfo(customerId)
     }
@@ -66,4 +66,8 @@ class GentleSDK {
   }
 }
 
-export { GentleSDK }
+const createGentleInstance: () => GentleSDK = (customerId?: CustomerId) => {
+  return new GentleSDK(customerId)
+}
+
+export { createGentleInstance, GentleSDK }

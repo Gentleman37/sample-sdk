@@ -2350,13 +2350,6 @@ var browserHandler = {
     },
 };
 
-var EVENT_NAME;
-(function (EVENT_NAME) {
-    EVENT_NAME["LOGIN"] = "login";
-    EVENT_NAME["CLICK"] = "click";
-    EVENT_NAME["VIEW"] = "view";
-})(EVENT_NAME || (EVENT_NAME = {}));
-
 class GentleSDK {
     browserId = null;
     browserInfo = null;
@@ -2388,7 +2381,7 @@ class GentleSDK {
     }
     track(event, customerId) {
         const userProperty = this.getUserProperty();
-        if (event.eventName === EVENT_NAME.LOGIN) {
+        if (event.eventName === 'view') {
             if (customerId === undefined)
                 throw new Error('customerId should be provided!');
             this.updateUserInfo(customerId);
@@ -2412,5 +2405,8 @@ class GentleSDK {
         this.events = [];
     }
 }
+const createGentleInstance = (customerId) => {
+    return new GentleSDK(customerId);
+};
 
-export { GentleSDK };
+export { GentleSDK, createGentleInstance };

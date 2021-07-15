@@ -18,4 +18,5 @@ declare class GentleSDK {
     getEvents(): LogEvent[];
     resetEvents(): void;
 }
-export { GentleSDK };
+declare const createGentleInstance: () => GentleSDK;
+export { createGentleInstance, GentleSDK };

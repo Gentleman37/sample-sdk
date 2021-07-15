@@ -1,1 +1,1 @@
-export { GentleSDK } from './gentle';
+export { createGentleInstance, GentleSDK } from './gentle';

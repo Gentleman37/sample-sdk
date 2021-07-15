@@ -3,7 +3,7 @@ export declare type CustomerId = string | number | null;
 export declare type SessionId = string | null;
 export declare type ISOTimestamp = string;
 export declare type LogEvent = {
-    eventName: EVENT_NAME;
+    eventName: EventName;
     properties: any;
 };
 export declare type LogProperty = {
@@ -13,8 +13,4 @@ export declare type LogProperty = {
     customerId: CustomerId;
 };
 export declare type BrowserInfo = Bowser.Parser.ParsedResult | null;
-export declare enum EVENT_NAME {
-    LOGIN = "login",
-    CLICK = "click",
-    VIEW = "view"
-}
+export declare type EventName = 'login' | 'click' | 'view';

@@ -4,7 +4,7 @@ export type SessionId = string | null
 export type ISOTimestamp = string
 
 export type LogEvent = {
-  eventName: EVENT_NAME
+  eventName: EventName
   properties: any
 }
 
@@ -17,8 +17,4 @@ export type LogProperty = {
 
 export type BrowserInfo = Bowser.Parser.ParsedResult | null
 
-export enum EVENT_NAME {
-  LOGIN = 'login',
-  CLICK = 'click',
-  VIEW = 'view',
-}
+export type EventName = 'login' | 'click' | 'view'
