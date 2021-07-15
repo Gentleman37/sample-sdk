@@ -1,4 +1,4 @@
-import { BrowserId, BrowserInfo, ClientEvent, CustomerId, EventLog, SessionId } from './types';
+import { BrowserId, BrowserInfo, LogEvent, CustomerId, SessionId } from './types';
 declare class GentleSDK {
     private browserId;
     private browserInfo;
@@ -8,16 +8,14 @@ declare class GentleSDK {
     constructor(customerId?: CustomerId);
     private getUserProperty;
     updateUserInfo(id: CustomerId): void;
-    track(event: ClientEvent, customerId?: CustomerId): void;
+    track(event: LogEvent, customerId?: CustomerId): void;
     getUserInfo(): {
         browserId: BrowserId;
         browserInfo: BrowserInfo;
         customerId: CustomerId;
         sessionId: SessionId;
     };
-    getEvents(): {
-        events: EventLog[];
-    };
+    getEvents(): LogEvent[];
     resetEvents(): void;
 }
 export { GentleSDK };

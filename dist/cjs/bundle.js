@@ -2414,9 +2414,7 @@ class GentleSDK {
         };
     }
     getEvents() {
-        return {
-            events: this.events,
-        };
+        return this.events;
     }
     resetEvents() {
         this.events = [];
