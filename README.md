@@ -2,7 +2,9 @@
 
 ## Install
 
-`npm i gentleman-sample-sdk`
+```
+npm i gentleman-sample-sdk
+```
 
 ## Usage (Nextjs)
 
