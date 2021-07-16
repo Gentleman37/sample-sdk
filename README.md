@@ -39,7 +39,7 @@ import { createGentleInstance } from 'gentleman-sample-sdk'
 
 function MyApp({ Component, pageProps }: AppProps) {
   let gentleClient
-  if (process.browser) gentleClient = createGentleInstance()
+  if (process.browser) gentleClient = createGentleInstance({ baseUrl: 'http://localhost:5000' })
 
   if (gentleClient) {
     return (
@@ -65,7 +65,12 @@ const Home: React.FC<IProps> = ({ user }) => {
   const gentleClient = useGentle()
 
   useEffect(() => {
-    gentleClient?.track({ eventName: 'view', properties: { page: 'home' } })
+    // post event data to 'http://localhost:5000/logs'
+    // return type: Promise<AxiosResponse<T>>
+    gentleClient?.track<T>({
+      endPoint: '/logs',
+      event: { eventName: 'view', properties: { page: 'home' } },
+    })
   }, [])
 
   return (

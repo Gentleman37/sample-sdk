@@ -1,7 +1,10 @@
+import axios from 'axios'
 import browserHandler from './borwserHandler'
-import { BrowserId, BrowserInfo, LogEvent, CustomerId, ISOTimestamp, LogProperty, SessionId } from './types'
+import { BrowserId, BrowserInfo, LogEvent, CustomerId, ISOTimestamp, LogProperty, SessionId, BaseUrl, UserProperty } from './types'
 
 class GentleSDK {
+  readonly baseUrl: BaseUrl
+
   private browserId: BrowserId = null
   private browserInfo: BrowserInfo = null
   private sessionId: SessionId = null
@@ -9,8 +12,10 @@ class GentleSDK {
 
   private events: LogEvent[] = []
 
-  constructor(customerId?: CustomerId) {
+  constructor({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) {
     if (typeof window === 'undefined') throw new Error('window is undefined!')
+
+    this.baseUrl = baseUrl
 
     this.browserId = browserHandler.getBrowserId()
     this.browserInfo = browserHandler.getBrowserInfo()
@@ -18,9 +23,9 @@ class GentleSDK {
     if (customerId !== undefined) this.customerId = customerId
   }
 
-  private getUserProperty(): LogProperty {
+  private getLogProperty(): LogProperty {
     const clientTime: ISOTimestamp = new Date().toISOString()
-    const userProperty = {
+    const logProperty = {
       deviceId: this.browserId,
       sessionId: this.sessionId,
       browserId: this.browserId,
@@ -28,27 +33,24 @@ class GentleSDK {
       clientTime,
     }
 
-    return userProperty
+    return logProperty
   }
 
   updateUserInfo(id: CustomerId) {
     this.customerId = id
   }
 
-  track(event: LogEvent, customerId?: CustomerId) {
-    if (event.eventName === 'login') {
-      if (customerId === undefined) throw new Error('customerId should be provided!')
-      this.updateUserInfo(customerId)
-    }
-
-    const userProperty = this.getUserProperty()
+  async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
+    const userProperty = this.getLogProperty()
 
     const log: LogEvent & LogProperty = { ...event, ...userProperty }
     this.events.push(log)
-    // TODO: 서버로 로그 전송
+
+    const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
+    return res
   }
 
-  getUserInfo() {
+  getUserProperty(): UserProperty {
     return {
       browserId: this.browserId,
       browserInfo: this.browserInfo,
@@ -66,8 +68,10 @@ class GentleSDK {
   }
 }
 
-const createGentleInstance: () => GentleSDK = (customerId?: CustomerId) => {
-  return new GentleSDK(customerId)
+type CreateGentleInstance = ({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) => GentleSDK
+
+const createGentleInstance: CreateGentleInstance = ({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) => {
+  return new GentleSDK({ baseUrl, customerId })
 }
 
 export { createGentleInstance, GentleSDK }

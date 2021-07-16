@@ -1,22 +1,28 @@
-import { BrowserId, BrowserInfo, LogEvent, CustomerId, SessionId } from './types';
+import { LogEvent, CustomerId, BaseUrl, UserProperty } from './types';
 declare class GentleSDK {
+    readonly baseUrl: BaseUrl;
     private browserId;
     private browserInfo;
     private sessionId;
     private customerId;
     private events;
-    constructor(customerId?: CustomerId);
-    private getUserProperty;
+    constructor({ baseUrl, customerId }: {
+        baseUrl: BaseUrl;
+        customerId?: CustomerId;
+    });
+    private getLogProperty;
     updateUserInfo(id: CustomerId): void;
-    track(event: LogEvent, customerId?: CustomerId): void;
-    getUserInfo(): {
-        browserId: BrowserId;
-        browserInfo: BrowserInfo;
-        customerId: CustomerId;
-        sessionId: SessionId;
-    };
+    track<T>({ endPoint, event }: {
+        endPoint: string;
+        event: LogEvent;
+    }): Promise<import("axios").AxiosResponse<T>>;
+    getUserProperty(): UserProperty;
     getEvents(): LogEvent[];
     resetEvents(): void;
 }
-declare const createGentleInstance: () => GentleSDK;
+declare type CreateGentleInstance = ({ baseUrl, customerId }: {
+    baseUrl: BaseUrl;
+    customerId?: CustomerId;
+}) => GentleSDK;
+declare const createGentleInstance: CreateGentleInstance;
 export { createGentleInstance, GentleSDK };
