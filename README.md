@@ -41,6 +41,7 @@ import { createGentleInstance } from 'gentleman-sample-sdk'
 
 function MyApp({ Component, pageProps }: AppProps) {
   let gentleClient
+  // baseUrl of log server
   if (process.browser) gentleClient = createGentleInstance({ baseUrl: 'http://localhost:5000' })
 
   if (gentleClient) {
