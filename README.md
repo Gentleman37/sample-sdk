@@ -71,7 +71,7 @@ const Home: React.FC<IProps> = ({ user }) => {
     // return type: Promise<AxiosResponse<T>>
     gentleClient?.track<T>({
       endPoint: '/logs',
-      event: { eventName: 'view', properties: { page: 'home' } },
+      event: { eventName: 'view', eventProperties: { page: 'home' } },
     })
   }, [])
 

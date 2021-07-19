@@ -8,17 +8,18 @@ export type ISOTimestamp = string
 
 export type LogEvent = {
   eventName: EventName
-  properties: any
+  eventProperties: Object
 }
+
+export type BrowserInfo = Bowser.Parser.ParsedResult | null
 
 export type LogProperty = {
   clientTime: ISOTimestamp
   sessionId: SessionId
   browserId: BrowserId
   customerId: CustomerId
+  browserInfo: BrowserInfo
 }
-
-export type BrowserInfo = Bowser.Parser.ParsedResult | null
 
 export type UserProperty = {
   browserId: BrowserId

@@ -3,7 +3,7 @@ import browserHandler from './borwserHandler'
 import { BrowserId, BrowserInfo, LogEvent, CustomerId, ISOTimestamp, LogProperty, SessionId, BaseUrl, UserProperty } from './types'
 
 class GentleSDK {
-  readonly baseUrl: BaseUrl
+  private readonly baseUrl: BaseUrl
 
   private browserId: BrowserId = null
   private browserInfo: BrowserInfo = null
@@ -26,10 +26,10 @@ class GentleSDK {
   private getLogProperty(): LogProperty {
     const clientTime: ISOTimestamp = new Date().toISOString()
     const logProperty = {
-      deviceId: this.browserId,
       sessionId: this.sessionId,
       browserId: this.browserId,
       customerId: this.customerId,
+      browserInfo: this.browserInfo,
       clientTime,
     }
 

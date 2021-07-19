@@ -6,15 +6,16 @@ export declare type SessionId = string | null;
 export declare type ISOTimestamp = string;
 export declare type LogEvent = {
     eventName: EventName;
-    properties: any;
+    eventProperties: Object;
 };
+export declare type BrowserInfo = Bowser.Parser.ParsedResult | null;
 export declare type LogProperty = {
     clientTime: ISOTimestamp;
     sessionId: SessionId;
     browserId: BrowserId;
     customerId: CustomerId;
+    browserInfo: BrowserInfo;
 };
-export declare type BrowserInfo = Bowser.Parser.ParsedResult | null;
 export declare type UserProperty = {
     browserId: BrowserId;
     browserInfo: BrowserInfo;

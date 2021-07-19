@@ -19,7 +19,7 @@ export default {
   plugins: [
     typescript({ target: 'ESNext' }),
     peerDepsExternal(),
-    resolve({ extensions: ['.mjs', '.js', '.jsx', '.json'] }),
+    resolve({ preferBuiltins: true, extensions: ['.mjs', '.js', '.jsx', '.json'] }),
     commonjs({
       include: 'node_modules/**',
     }),

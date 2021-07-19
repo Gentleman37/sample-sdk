@@ -1,6 +1,6 @@
 import { LogEvent, CustomerId, BaseUrl, UserProperty } from './types';
 declare class GentleSDK {
-    readonly baseUrl: BaseUrl;
+    private readonly baseUrl;
     private browserId;
     private browserInfo;
     private sessionId;

@@ -4824,10 +4824,10 @@ class GentleSDK {
     getLogProperty() {
         const clientTime = new Date().toISOString();
         const logProperty = {
-            deviceId: this.browserId,
             sessionId: this.sessionId,
             browserId: this.browserId,
             customerId: this.customerId,
+            browserInfo: this.browserInfo,
             clientTime,
         };
         return logProperty;
