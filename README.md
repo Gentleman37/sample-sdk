@@ -27,9 +27,10 @@ export const GentleProvider: React.FC<IProps> = ({ gentleClient, children }) => 
 }
 
 export const useGentle = () => {
-  if (GentleSDKContext !== null) return useContext(GentleSDKContext)
+  const contextValue = useContext(GentleSDKContext)
+  if (contextValue !== null) return contextValue
 
-  throw new Error('GentleSDKContext is null!')
+  throw new Error('ContextValue is null!')
 }
 ```
 
@@ -70,7 +71,7 @@ const Home: React.FC<IProps> = ({ user }) => {
   useEffect(() => {
     // post event data to 'http://localhost:5000/logs'
     // return type: Promise<AxiosResponse<T>>
-    gentleClient?.track<T>({
+    gentleClient.track<T>({
       endPoint: '/logs',
       event: { eventName: 'view', eventProperties: { page: 'home' } },
     })
