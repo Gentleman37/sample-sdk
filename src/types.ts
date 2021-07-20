@@ -34,6 +34,6 @@ export type UserProperty = {
   sessionId: SessionId
 }
 
-export type EventName = 'login' | 'click' | 'view'
+export type EventName = string
 
 export type GentleInstance = InstanceType<typeof GentleSDK>
