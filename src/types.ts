@@ -4,17 +4,23 @@ export type BaseUrl = string
 export type BrowserId = string | null
 export type CustomerId = string | number | null
 export type SessionId = string | null
-export type ISOTimestamp = string
+export type Timestamp = number
 
 export type LogEvent = {
   eventName: EventName
   eventProperties: Object
 }
 
-export type BrowserInfo = Bowser.Parser.ParsedResult | null
+export type BrowserInfo = {
+  language: string
+  browser: Bowser.Parser.Details
+  os: Bowser.Parser.OSDetails
+  platform: Bowser.Parser.PlatformDetails
+  engine: Bowser.Parser.Details
+} | null
 
 export type LogProperty = {
-  clientTime: ISOTimestamp
+  clientTime: Timestamp
   sessionId: SessionId
   browserId: BrowserId
   customerId: CustomerId
@@ -30,4 +36,4 @@ export type UserProperty = {
 
 export type EventName = 'login' | 'click' | 'view'
 
-export type GentleSDKClient = InstanceType<typeof GentleSDK>
+export type GentleInstance = InstanceType<typeof GentleSDK>

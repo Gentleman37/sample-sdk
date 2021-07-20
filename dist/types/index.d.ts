@@ -1,2 +1,2 @@
 export { createGentleInstance } from './gentle';
-export { GentleSDKClient } from './types';
+export { GentleInstance } from './types';

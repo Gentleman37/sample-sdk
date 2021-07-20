@@ -15,9 +15,10 @@ export default {
     return existingID
   },
   getBrowserInfo() {
-    const browser = Browser.parse(window.navigator.userAgent)
+    const { userAgent, language } = window.navigator
+    const browser = Browser.parse(userAgent)
 
-    return browser
+    return { ...browser, language }
   },
   getSessionId() {
     const existingID = sessionStorage.getItem(STORAGE_NAME)

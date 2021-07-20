@@ -1,6 +1,6 @@
 import axios from 'axios'
 import browserHandler from './borwserHandler'
-import { BrowserId, BrowserInfo, LogEvent, CustomerId, ISOTimestamp, LogProperty, SessionId, BaseUrl, UserProperty } from './types'
+import { BrowserId, BrowserInfo, LogEvent, CustomerId, Timestamp, LogProperty, SessionId, BaseUrl, UserProperty } from './types'
 
 class GentleSDK {
   private readonly baseUrl: BaseUrl
@@ -24,7 +24,7 @@ class GentleSDK {
   }
 
   private getLogProperty(): LogProperty {
-    const clientTime: ISOTimestamp = new Date().toISOString()
+    const clientTime: Timestamp = new Date().getTime()
     const logProperty = {
       sessionId: this.sessionId,
       browserId: this.browserId,
@@ -34,20 +34,6 @@ class GentleSDK {
     }
 
     return logProperty
-  }
-
-  updateUserInfo(id: CustomerId) {
-    this.customerId = id
-  }
-
-  async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
-    const userProperty = this.getLogProperty()
-
-    const log: LogEvent & LogProperty = { ...event, ...userProperty }
-    this.events.push(log)
-
-    const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
-    return res
   }
 
   getUserProperty(): UserProperty {
@@ -65,6 +51,20 @@ class GentleSDK {
 
   resetEvents() {
     this.events = []
+  }
+
+  updateUserId(id: CustomerId) {
+    this.customerId = id
+  }
+
+  async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
+    const userProperty = this.getLogProperty()
+
+    const log: LogEvent & LogProperty = { ...event, ...userProperty }
+    this.events.push(log)
+
+    const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
+    return res
   }
 }
 

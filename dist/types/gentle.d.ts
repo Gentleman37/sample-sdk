@@ -11,14 +11,14 @@ declare class GentleSDK {
         customerId?: CustomerId;
     });
     private getLogProperty;
-    updateUserInfo(id: CustomerId): void;
+    getUserProperty(): UserProperty;
+    getEvents(): LogEvent[];
+    resetEvents(): void;
+    updateUserId(id: CustomerId): void;
     track<T>({ endPoint, event }: {
         endPoint: string;
         event: LogEvent;
     }): Promise<import("axios").AxiosResponse<T>>;
-    getUserProperty(): UserProperty;
-    getEvents(): LogEvent[];
-    resetEvents(): void;
 }
 declare type CreateGentleInstance = ({ baseUrl, customerId }: {
     baseUrl: BaseUrl;

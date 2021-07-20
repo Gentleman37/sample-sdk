@@ -4790,8 +4790,9 @@ var browserHandler = {
         return existingID;
     },
     getBrowserInfo() {
-        const browser = Bowser.parse(window.navigator.userAgent);
-        return browser;
+        const { userAgent, language } = window.navigator;
+        const browser = Bowser.parse(userAgent);
+        return { ...browser, language };
     },
     getSessionId() {
         const existingID = sessionStorage.getItem(STORAGE_NAME);
@@ -4822,7 +4823,7 @@ class GentleSDK {
             this.customerId = customerId;
     }
     getLogProperty() {
-        const clientTime = new Date().toISOString();
+        const clientTime = new Date().getTime();
         const logProperty = {
             sessionId: this.sessionId,
             browserId: this.browserId,
@@ -4831,16 +4832,6 @@ class GentleSDK {
             clientTime,
         };
         return logProperty;
-    }
-    updateUserInfo(id) {
-        this.customerId = id;
-    }
-    async track({ endPoint, event }) {
-        const userProperty = this.getLogProperty();
-        const log = { ...event, ...userProperty };
-        this.events.push(log);
-        const res = await axios.post(`${this.baseUrl}${endPoint}`, log);
-        return res;
     }
     getUserProperty() {
         return {
@@ -4855,6 +4846,16 @@ class GentleSDK {
     }
     resetEvents() {
         this.events = [];
+    }
+    updateUserId(id) {
+        this.customerId = id;
+    }
+    async track({ endPoint, event }) {
+        const userProperty = this.getLogProperty();
+        const log = { ...event, ...userProperty };
+        this.events.push(log);
+        const res = await axios.post(`${this.baseUrl}${endPoint}`, log);
+        return res;
     }
 }
 const createGentleInstance = ({ baseUrl, customerId }) => {

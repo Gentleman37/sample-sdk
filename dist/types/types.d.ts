@@ -3,14 +3,20 @@ export declare type BaseUrl = string;
 export declare type BrowserId = string | null;
 export declare type CustomerId = string | number | null;
 export declare type SessionId = string | null;
-export declare type ISOTimestamp = string;
+export declare type Timestamp = number;
 export declare type LogEvent = {
     eventName: EventName;
     eventProperties: Object;
 };
-export declare type BrowserInfo = Bowser.Parser.ParsedResult | null;
+export declare type BrowserInfo = {
+    language: string;
+    browser: Bowser.Parser.Details;
+    os: Bowser.Parser.OSDetails;
+    platform: Bowser.Parser.PlatformDetails;
+    engine: Bowser.Parser.Details;
+} | null;
 export declare type LogProperty = {
-    clientTime: ISOTimestamp;
+    clientTime: Timestamp;
     sessionId: SessionId;
     browserId: BrowserId;
     customerId: CustomerId;
@@ -23,4 +29,4 @@ export declare type UserProperty = {
     sessionId: SessionId;
 };
 export declare type EventName = 'login' | 'click' | 'view';
-export declare type GentleSDKClient = InstanceType<typeof GentleSDK>;
+export declare type GentleInstance = InstanceType<typeof GentleSDK>;
