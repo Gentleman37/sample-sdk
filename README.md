@@ -12,16 +12,16 @@ npm i gentleman-sample-sdk
 
 ```ts
 import React, { useContext, createContext, useState } from 'react'
-import { GentleSDKClient } from 'gentleman-sample-sdk'
+import { GentleInstance } from 'gentleman-sample-sdk'
 
-const GentleSDKContext = createContext<GentleSDKClient | null>(null)
+const GentleSDKContext = createContext<GentleInstance | null>(null)
 
 interface IProps {
-  gentleClient: GentleSDKClient
+  gentleClient: GentleInstance
 }
 
 export const GentleProvider: React.FC<IProps> = ({ gentleClient, children }) => {
-  const [state] = useState<GentleSDKClient>(gentleClient)
+  const [state] = useState<GentleInstance>(gentleClient)
 
   return <GentleSDKContext.Provider value={state}>{children}</GentleSDKContext.Provider>
 }
