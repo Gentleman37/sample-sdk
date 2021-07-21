@@ -1,6 +1,6 @@
 {
   "name": "gentleman-sample-sdk",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "module": "dist/es/bundle.js",
   "main": "dist/cjs/bundle.js",
   "types": "dist/types/index.d.ts",
@@ -32,6 +32,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-uglify": "^6.0.4"
   }
 }
