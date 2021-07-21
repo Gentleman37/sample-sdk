@@ -1,4 +1,4 @@
-import { LogEvent, CustomerId, BaseUrl, UserProperty } from './types';
+import { LogEvent, CustomerId, BaseUrl, UserProperty, LatitudeAndLongitude } from './types';
 declare class GentleSDK {
     private readonly baseUrl;
     private browserId;
@@ -15,8 +15,8 @@ declare class GentleSDK {
     getUserProperty(): UserProperty;
     getEvents(): LogEvent[];
     resetEvents(): void;
-    updateUserId(id: CustomerId): void;
-    updateGeolocation(): Promise<void>;
+    updateUserId(id: CustomerId): CustomerId;
+    updateGeolocation(): Promise<LatitudeAndLongitude>;
     track<T>({ endPoint, event }: {
         endPoint: string;
         event: LogEvent;

@@ -32,7 +32,7 @@ export default {
     return existingID
   },
   getGeolocation(): Promise<LatitudeAndLongitude> {
-    const { geolocation } = navigator
+    const { geolocation } = window.navigator
 
     if (!geolocation) return Promise.resolve({ latitude: null, longitude: null })
 

@@ -32,7 +32,10 @@ class GentleSDK {
     this.browserId = browserHandler.getBrowserId()
     this.browserInfo = browserHandler.getBrowserInfo()
     this.sessionId = browserHandler.getSessionId()
-    browserHandler.getGeolocation().then((location) => (this.geolocation = location))
+    browserHandler
+      .getGeolocation()
+      .then((location) => (this.geolocation = location))
+      .catch((e) => console.log(e))
 
     if (customerId !== undefined) this.customerId = customerId
   }
@@ -70,11 +73,13 @@ class GentleSDK {
 
   updateUserId(id: CustomerId) {
     this.customerId = id
+    return this.customerId
   }
 
   async updateGeolocation() {
     const location = await browserHandler.getGeolocation()
     this.geolocation = location
+    return this.geolocation
   }
 
   async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
