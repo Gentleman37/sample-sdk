@@ -77,9 +77,13 @@ class GentleSDK {
   }
 
   async updateGeolocation() {
-    const location = await browserHandler.getGeolocation()
-    this.geolocation = location
-    return this.geolocation
+    try {
+      const location = await browserHandler.getGeolocation()
+      this.geolocation = location
+      return this.geolocation
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {

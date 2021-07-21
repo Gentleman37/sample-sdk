@@ -16,7 +16,7 @@ declare class GentleSDK {
     getEvents(): LogEvent[];
     resetEvents(): void;
     updateUserId(id: CustomerId): CustomerId;
-    updateGeolocation(): Promise<LatitudeAndLongitude>;
+    updateGeolocation(): Promise<LatitudeAndLongitude | undefined>;
     track<T>({ endPoint, event }: {
         endPoint: string;
         event: LogEvent;
