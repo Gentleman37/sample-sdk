@@ -4,6 +4,10 @@ export declare type BrowserId = string | null;
 export declare type CustomerId = string | number | null;
 export declare type SessionId = string | null;
 export declare type Timestamp = number;
+export declare type LatitudeAndLongitude = {
+    latitude: string | null;
+    longitude: string | null;
+};
 export declare type LogEvent = {
     eventName: EventName;
     eventProperties: Object;
@@ -21,6 +25,7 @@ export declare type LogProperty = {
     browserId: BrowserId;
     customerId: CustomerId;
     browserInfo: BrowserInfo;
+    geolocation: LatitudeAndLongitude;
 };
 export declare type UserProperty = {
     browserId: BrowserId;
@@ -28,5 +33,5 @@ export declare type UserProperty = {
     customerId: CustomerId;
     sessionId: SessionId;
 };
-export declare type EventName = 'login' | 'click' | 'view';
+export declare type EventName = string;
 export declare type GentleInstance = InstanceType<typeof GentleSDK>;

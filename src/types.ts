@@ -6,6 +6,11 @@ export type CustomerId = string | number | null
 export type SessionId = string | null
 export type Timestamp = number
 
+export type LatitudeAndLongitude = {
+  latitude: string | null
+  longitude: string | null
+}
+
 export type LogEvent = {
   eventName: EventName
   eventProperties: Object
@@ -25,6 +30,7 @@ export type LogProperty = {
   browserId: BrowserId
   customerId: CustomerId
   browserInfo: BrowserInfo
+  geolocation: LatitudeAndLongitude
 }
 
 export type UserProperty = {

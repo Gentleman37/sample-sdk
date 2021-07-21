@@ -1,10 +1,11 @@
 import { v4 as uuid } from 'uuid'
 import Browser from 'bowser'
+import { BrowserId, BrowserInfo, LatitudeAndLongitude, SessionId } from './types'
 
 const STORAGE_NAME = 'gentle_brw_id'
 
 export default {
-  getBrowserId() {
+  getBrowserId(): BrowserId {
     const existingID = localStorage.getItem(STORAGE_NAME)
     if (existingID === null || existingID === undefined) {
       const newID = uuid()
@@ -14,13 +15,13 @@ export default {
 
     return existingID
   },
-  getBrowserInfo() {
+  getBrowserInfo(): BrowserInfo {
     const { userAgent, language } = window.navigator
     const browser = Browser.parse(userAgent)
 
     return { ...browser, language }
   },
-  getSessionId() {
+  getSessionId(): SessionId {
     const existingID = sessionStorage.getItem(STORAGE_NAME)
     if (existingID === null || existingID === undefined) {
       const newID = String(new Date().getTime())
@@ -29,5 +30,27 @@ export default {
     }
 
     return existingID
+  },
+  getGeolocation(): Promise<LatitudeAndLongitude> {
+    const { geolocation } = navigator
+
+    if (!geolocation) return Promise.resolve({ latitude: null, longitude: null })
+
+    return new Promise((resolve, reject) => {
+      const success = (position: GeolocationPosition) => {
+        const { latitude: lat, longitude: long } = position.coords
+        const latitude = lat.toFixed(5)
+        const longitude = long.toFixed(5)
+
+        resolve({ latitude, longitude })
+      }
+
+      const error = (error: GeolocationPositionError) => {
+        reject(error)
+        console.log(error)
+      }
+
+      geolocation.getCurrentPosition(success, error)
+    })
   },
 }

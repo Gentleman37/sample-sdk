@@ -5,6 +5,7 @@ declare class GentleSDK {
     private browserInfo;
     private sessionId;
     private customerId;
+    private geolocation;
     private events;
     constructor({ baseUrl, customerId }: {
         baseUrl: BaseUrl;
@@ -15,6 +16,7 @@ declare class GentleSDK {
     getEvents(): LogEvent[];
     resetEvents(): void;
     updateUserId(id: CustomerId): void;
+    updateGeolocation(): Promise<void>;
     track<T>({ endPoint, event }: {
         endPoint: string;
         event: LogEvent;

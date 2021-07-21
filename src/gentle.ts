@@ -1,6 +1,17 @@
 import axios from 'axios'
 import browserHandler from './borwserHandler'
-import { BrowserId, BrowserInfo, LogEvent, CustomerId, Timestamp, LogProperty, SessionId, BaseUrl, UserProperty } from './types'
+import {
+  BrowserId,
+  BrowserInfo,
+  LogEvent,
+  CustomerId,
+  Timestamp,
+  LogProperty,
+  SessionId,
+  BaseUrl,
+  UserProperty,
+  LatitudeAndLongitude,
+} from './types'
 
 class GentleSDK {
   private readonly baseUrl: BaseUrl
@@ -9,6 +20,7 @@ class GentleSDK {
   private browserInfo: BrowserInfo = null
   private sessionId: SessionId = null
   private customerId: CustomerId = null
+  private geolocation: LatitudeAndLongitude = { latitude: null, longitude: null }
 
   private events: LogEvent[] = []
 
@@ -20,6 +32,8 @@ class GentleSDK {
     this.browserId = browserHandler.getBrowserId()
     this.browserInfo = browserHandler.getBrowserInfo()
     this.sessionId = browserHandler.getSessionId()
+    browserHandler.getGeolocation().then((location) => (this.geolocation = location))
+
     if (customerId !== undefined) this.customerId = customerId
   }
 
@@ -30,6 +44,7 @@ class GentleSDK {
       browserId: this.browserId,
       customerId: this.customerId,
       browserInfo: this.browserInfo,
+      geolocation: this.geolocation,
       clientTime,
     }
 
@@ -57,10 +72,15 @@ class GentleSDK {
     this.customerId = id
   }
 
-  async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
-    const userProperty = this.getLogProperty()
+  async updateGeolocation() {
+    const location = await browserHandler.getGeolocation()
+    this.geolocation = location
+  }
 
-    const log: LogEvent & LogProperty = { ...event, ...userProperty }
+  async track<T>({ endPoint, event }: { endPoint: string; event: LogEvent }) {
+    const logProperty = this.getLogProperty()
+
+    const log: LogEvent & LogProperty = { ...event, ...logProperty }
     this.events.push(log)
 
     const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
