@@ -1,6 +1,6 @@
 {
   "name": "gentleman-sample-sdk",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "module": "dist/es/bundle.js",
   "main": "dist/cjs/bundle.js",
   "types": "dist/types/index.d.ts",
