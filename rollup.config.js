@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import json from '@rollup/plugin-json'
-import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 
 export default {
   input: 'src/index.ts',
@@ -18,13 +18,11 @@ export default {
     },
   ],
   plugins: [
-    typescript({ target: 'ESNext' }),
+    typescript({ target: 'es5' }),
     peerDepsExternal(),
     resolve({ preferBuiltins: true, extensions: ['.mjs', '.js', '.jsx', '.json'] }),
-    commonjs({
-      include: 'node_modules/**',
-    }),
+    commonjs({ include: 'node_modules/**' }),
     json(),
-    uglify(),
+    terser(),
   ],
 }
