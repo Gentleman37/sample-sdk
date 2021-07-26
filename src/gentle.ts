@@ -32,10 +32,6 @@ class GentleSDK {
     this.browserId = browserHandler.getBrowserId()
     this.browserInfo = browserHandler.getBrowserInfo()
     this.sessionId = browserHandler.getSessionId()
-    browserHandler
-      .getGeolocation()
-      .then((location) => (this.geolocation = location))
-      .catch((e) => console.log(e))
 
     if (customerId !== undefined) this.customerId = customerId
   }
