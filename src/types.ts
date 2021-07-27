@@ -55,7 +55,6 @@ export type UserProperty = {
 
 export type GentleConfig = {
   baseUrl: BaseUrl
-  devMode: boolean
 }
 
 export type GentleInstance = InstanceType<typeof GentleSDK>

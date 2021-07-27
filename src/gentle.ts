@@ -18,7 +18,6 @@ import {
 
 class GentleSDK {
   private readonly baseUrl: BaseUrl
-  private readonly devMode: boolean
 
   private readonly referrerInfo: ReferrerInfo
   private readonly utmInfo: UtmInfo
@@ -31,11 +30,10 @@ class GentleSDK {
 
   private events: LogEvent[] = []
 
-  constructor({ baseUrl, devMode }: GentleConfig) {
+  constructor({ baseUrl }: GentleConfig) {
     if (typeof window === 'undefined') throw new Error('window is undefined!')
 
     this.baseUrl = baseUrl
-    this.devMode = devMode
 
     this.referrerInfo = browserHandler.getReferrerInfo()
     this.utmInfo = browserHandler.getUtmInfo()
@@ -99,17 +97,21 @@ class GentleSDK {
     const log: LogEvent & LogProperty = { ...event, ...logProperty }
     this.events.push(log)
 
-    if (this.devMode) return console.log('send log to server when devMode is false')
-
-    const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
-    return res
+    try {
+      const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
+      return res
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response.data)
+      }
+    }
   }
 }
 
 type CreateGentleInstance = (config: GentleConfig) => GentleSDK
 
-const createGentleInstance: CreateGentleInstance = ({ baseUrl, devMode = true }: GentleConfig) => {
-  return new GentleSDK({ baseUrl, devMode })
+const createGentleInstance: CreateGentleInstance = ({ baseUrl }: GentleConfig) => {
+  return new GentleSDK({ baseUrl })
 }
 
 export { createGentleInstance, GentleSDK }

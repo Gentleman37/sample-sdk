@@ -70,7 +70,6 @@ const Home: React.FC<IProps> = ({ user }) => {
 
   useEffect(() => {
     // post event data to 'http://localhost:5000/logs'
-    // return type: Promise<AxiosResponse<T>>
     gentleClient.track<T>({
       endPoint: '/logs',
       event: { eventName: 'view', eventProperties: { page: 'home' } },
