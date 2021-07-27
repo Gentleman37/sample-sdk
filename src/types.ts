@@ -11,8 +11,21 @@ export type LatitudeAndLongitude = {
   longitude: string | null
 }
 
+export type ReferrerInfo = {
+  referrer: string | null
+  referring_domain: string | null
+}
+
+export type UtmInfo = {
+  utm_campaign: string | null
+  utm_content: string | null
+  utm_medium: string | null
+  utm_source: string | null
+  utm_term: string | null
+}
+
 export type LogEvent = {
-  eventName: EventName
+  eventName: string
   eventProperties: Object
 }
 
@@ -40,6 +53,9 @@ export type UserProperty = {
   sessionId: SessionId
 }
 
-export type EventName = string
+export type GentleConfig = {
+  baseUrl: BaseUrl
+  devMode: boolean
+}
 
 export type GentleInstance = InstanceType<typeof GentleSDK>

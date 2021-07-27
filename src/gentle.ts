@@ -11,10 +11,17 @@ import {
   BaseUrl,
   UserProperty,
   LatitudeAndLongitude,
+  GentleConfig,
+  ReferrerInfo,
+  UtmInfo,
 } from './types'
 
 class GentleSDK {
   private readonly baseUrl: BaseUrl
+  private readonly devMode: boolean
+
+  private readonly referrerInfo: ReferrerInfo
+  private readonly utmInfo: UtmInfo
 
   private browserId: BrowserId = null
   private browserInfo: BrowserInfo = null
@@ -24,16 +31,18 @@ class GentleSDK {
 
   private events: LogEvent[] = []
 
-  constructor({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) {
+  constructor({ baseUrl, devMode }: GentleConfig) {
     if (typeof window === 'undefined') throw new Error('window is undefined!')
 
     this.baseUrl = baseUrl
+    this.devMode = devMode
+
+    this.referrerInfo = browserHandler.getReferrerInfo()
+    this.utmInfo = browserHandler.getUtmInfo()
 
     this.browserId = browserHandler.getBrowserId()
     this.browserInfo = browserHandler.getBrowserInfo()
     this.sessionId = browserHandler.getSessionId()
-
-    if (customerId !== undefined) this.customerId = customerId
   }
 
   private getLogProperty(): LogProperty {
@@ -45,6 +54,8 @@ class GentleSDK {
       browserInfo: this.browserInfo,
       geolocation: this.geolocation,
       clientTime,
+      referrerInfo: this.referrerInfo,
+      utmInfo: this.utmInfo,
     }
 
     return logProperty
@@ -88,15 +99,17 @@ class GentleSDK {
     const log: LogEvent & LogProperty = { ...event, ...logProperty }
     this.events.push(log)
 
+    if (this.devMode) return console.log('send log to server when devMode is false')
+
     const res = await axios.post<T>(`${this.baseUrl}${endPoint}`, log)
     return res
   }
 }
 
-type CreateGentleInstance = ({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) => GentleSDK
+type CreateGentleInstance = (config: GentleConfig) => GentleSDK
 
-const createGentleInstance: CreateGentleInstance = ({ baseUrl, customerId }: { baseUrl: BaseUrl; customerId?: CustomerId }) => {
-  return new GentleSDK({ baseUrl, customerId })
+const createGentleInstance: CreateGentleInstance = ({ baseUrl, devMode = true }: GentleConfig) => {
+  return new GentleSDK({ baseUrl, devMode })
 }
 
 export { createGentleInstance, GentleSDK }

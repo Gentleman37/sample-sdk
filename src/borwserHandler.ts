@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import Browser from 'bowser'
-import { BrowserId, BrowserInfo, LatitudeAndLongitude, SessionId } from './types'
+import { BrowserId, BrowserInfo, LatitudeAndLongitude, ReferrerInfo, SessionId, UtmInfo } from './types'
 
 const STORAGE_NAME = 'gentle_brw_id'
 
@@ -52,5 +52,34 @@ export default {
 
       geolocation.getCurrentPosition(success, error)
     })
+  },
+  getUtmInfo() {
+    const utmInfo: UtmInfo = {
+      utm_campaign: null,
+      utm_content: null,
+      utm_medium: null,
+      utm_source: null,
+      utm_term: null,
+    }
+
+    const params = new URLSearchParams(window.location.search)
+
+    utmInfo.utm_campaign = params.get('utm_campaign')
+    utmInfo.utm_content = params.get('utm_content')
+    utmInfo.utm_medium = params.get('utm_medium')
+    utmInfo.utm_source = params.get('utm_source')
+    utmInfo.utm_term = params.get('utm_term')
+
+    return utmInfo
+  },
+  getReferrerInfo() {
+    const { referrer } = window.document
+
+    const referrerInfo: ReferrerInfo = {
+      referrer: referrer || null,
+      referring_domain: referrer.split('/')[2] || null,
+    }
+
+    return referrerInfo
   },
 }
