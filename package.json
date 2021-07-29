@@ -1,6 +1,6 @@
 {
   "name": "gentleman-sample-sdk",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "module": "dist/es/bundle.js",
   "main": "dist/cjs/bundle.js",
   "types": "dist/types/index.d.ts",
@@ -20,10 +20,6 @@
   "files": [
     "/dist"
   ],
-  "peerDependencies": {
-    "rollup": "^2.53.1",
-    "tslib": "^2.3.0"
-  },
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^8.2.1",
