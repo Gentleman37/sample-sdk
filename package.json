@@ -11,7 +11,7 @@
     "build": "rollup -c rollup.config.js",
     "build:types": "tsc --emitDeclarationOnly"
   },
-  "dependencies": {
+  "peerDependencies": {
     "axios": "^0.21.1",
     "bowser": "^2.11.0",
     "tslib": "^2.3.0",
